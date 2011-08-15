@@ -45,5 +45,5 @@ define ->
 
 
     return {
-        Collection: CollectionView
+        View: CollectionView
     }

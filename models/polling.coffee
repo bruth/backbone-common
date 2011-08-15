@@ -5,11 +5,7 @@
 # time between polls. Override the ``poll`` method to customize the
 # behavior of the poll.
 
-define ->
-
-    include = (obj, mixin) ->
-        for name, method of mixin
-            obj::[name] = method
+define ['common/utils'], (utils) ->
 
     Mixin =
         pollInterval: 1000 * 30
@@ -21,8 +17,8 @@ define ->
     class PollingModel extends Backbone.Model
     class PollingCollection extends Backbone.Collection
 
-    include PollingModel, Mixin
-    include PollingCollection, Mixin
+    utils.include PollingModel, Mixin
+    utils.include PollingCollection, Mixin
 
     return {
         Model: PollingModel

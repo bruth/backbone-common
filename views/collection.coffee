@@ -44,4 +44,6 @@ define ->
         destroy: (model) => @childViews[model.cid].el.remove()
 
 
-    return CollectionView
+    return {
+        Collection: CollectionView
+    }

@@ -37,19 +37,19 @@ define ->
             delete attrs['_enabled']
             attrs
 
-        _changeActive: (model, active) ->
+        _changeActive: (model, active, options) ->
             event = if active then 'active' else 'inactive'
-            @model.trigger event, @
+            @model.trigger event, @, options
 
-        _changeEnabled: (model, enabled) ->
+        _changeEnabled: (model, enabled, options) ->
             event = if enabled then 'enabled' else 'disabled'
-            @model.trigger event, @
+            @model.trigger event, @, options
 
-        enable: -> @set('_enabled', true)
-        disable: -> @set('_enabled', false)
+        enable: (options) -> @set('_enabled', true, options)
+        disable: (options) -> @set('_enabled', false, options)
 
-        activate: -> if @get('_enabled') then @set('_active', true)
-        inactivate: -> if @get('_enabled') then @set('_active', false)
+        activate: (options) -> if @get('_enabled') then @set('_active', true, options)
+        inactivate: (options) -> if @get('_enabled') then @set('_active', false, options)
 
         isEnabled: -> @get('_enabled')
         isActive: -> @get('_enabled') and @get('_active')

@@ -40,12 +40,9 @@ define ->
             if @_isReady then return fn()
             @_queue.push fn
 
-    return
+    return {
         extend: extend
         include: include
         namespace: namespace
         App: App
-
-
-
-
+    }

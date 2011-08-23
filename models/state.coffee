@@ -50,7 +50,7 @@ define ->
             event = if enabled then 'enabled' else 'disabled'
             @trigger event, @, options
 
-        enable: (options) ->
+        enable: (options={}) ->
             @set('_enabled', true, options)
             if options.reactivate and @hasChanged('_enabled') and @isActive()
                 @_changeActive @, true

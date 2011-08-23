@@ -18,7 +18,12 @@
 # become ``active`` or ``inactive`` while in this state until is ``enabled``.
 #
 # The public methods ``enable``, ``disable``, ``activate``, and ``inactivate``
-# should be used when changing it's state.
+# should be used when changing it's state to ensure consistency.
+#
+# Supported options:
+#
+#   ``reactivate`` - passed into ``enable`` which will trigger the
+#   "active" event if the model was in an active state prior to being disabled.
 
 define ->
 
@@ -45,7 +50,11 @@ define ->
             event = if enabled then 'enabled' else 'disabled'
             @trigger event, @, options
 
-        enable: (options) -> @set('_enabled', true, options)
+        enable: (options) ->
+            @set('_enabled', true, options)
+            if options.reactivate and @hasChanged('_enabled') and @isActive()
+                @_changeActive @, true
+
         disable: (options) -> @set('_enabled', false, options)
 
         activate: (options) -> if @get('_enabled') then @set('_active', true, options)

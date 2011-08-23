@@ -1,10 +1,7 @@
 # Usage:
 # 
 # A simple view which listens for various state change events from it's
-# representing model. In this context, a model acts as a single state within
-# a state machine. When and how states become active is dependent on the
-# implementation of state manager. For example, a typical tabs state machine
-# only allows a single tab to be _active_ at any given time.
+# representing model. 
 #
 # Supported events:
 #
@@ -20,8 +17,12 @@
 #
 # Any of the methods can be overriden to reflect the appropriate UI change
 # for each state change.
+#
+# Works with ``common/models/state.coffee``. See it's usage for more
+# information.
 
 define ->
+
     class StateView extends Backbone.View
         initialize: ->
             @model.bind 'active', @activate

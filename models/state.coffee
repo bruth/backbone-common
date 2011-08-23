@@ -39,11 +39,11 @@ define ->
 
         _changeActive: (model, active, options) ->
             event = if active then 'active' else 'inactive'
-            @model.trigger event, @, options
+            @trigger event, @, options
 
         _changeEnabled: (model, enabled, options) ->
             event = if enabled then 'enabled' else 'disabled'
-            @model.trigger event, @, options
+            @trigger event, @, options
 
         enable: (options) -> @set('_enabled', true, options)
         disable: (options) -> @set('_enabled', false, options)

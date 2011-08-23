@@ -51,9 +51,10 @@ define ->
             @trigger event, @, options
 
         enable: (options={}) ->
-            enabled = @get '_enabled'
+            # ensure the model was disabled before
+            wasDisabled = not @get '_enabled'
             @set('_enabled', true, options)
-            if options.reactivate and enabled and @isActive()
+            if options.reactivate and wasDisabled and @isActive()
                 @_changeActive @, true
 
         disable: (options) -> @set('_enabled', false, options)

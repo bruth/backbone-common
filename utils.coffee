@@ -24,7 +24,7 @@ define ->
             extend @, attrs
 
         _ready: ->
-            return if @_queue else @_queue = []
+            if @_queue then return else @_queue = []
 
             timer = setInterval =>
                 @_isReady = true

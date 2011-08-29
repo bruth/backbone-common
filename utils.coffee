@@ -27,6 +27,7 @@ define ->
             if @_queue then return else @_queue = []
 
             timer = setInterval =>
+                return if @pending isnt 0
                 @_isReady = true
                 clearTimeout timer
                 (fn() for fn in @_queue)

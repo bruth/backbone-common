@@ -14,6 +14,9 @@ define ->
             @collection.bind 'remove', @remove
             @collection.bind 'destroy', @destroy
 
+        insertChild: (view) ->
+            @el.append view.el
+
         add: (model) =>
             # the view for this model has already been rendered, simply
             # re-attach it to the DOM
@@ -24,7 +27,7 @@ define ->
             # create a new view representing this model
             else
                 view = @childViews[model.cid] = (new @viewClass model: model).render()
-            @el.append view.el
+            @insertChild view
 
         # the collection has been reset, so create views for each new model
         reset: (collection, options) =>

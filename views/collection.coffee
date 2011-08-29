@@ -7,6 +7,8 @@
 define ->
 
     class CollectionView extends Backbone.View
+        viewClass: Backbone.View
+
         initialize: ->
             @childViews = {}
             @collection.bind 'add', @add

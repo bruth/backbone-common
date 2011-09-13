@@ -46,7 +46,9 @@ define ['common/utils'], (utils) ->
             # since this should be temporary, we set a timer to destroy the
             # element after some time to prevent memory leaks. note: this has no
             # impact on the underlying model
-            view._removeTimer = setTimeout (=> @destroy), 1000 * 10
+            view._removeTimer = setTimeout =>
+                @destroy model
+            , 1000 * 10
 
         # remove the DOM element and all bound data completely
         destroy: (model) => @childViews[model.cid].el.remove()

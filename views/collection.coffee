@@ -1,11 +1,14 @@
 # Usage:
 # 
-# Extend and define a ``viewClass`` property which is the view class
-# of the items within the collection. Each view is cached by their model's
-# ``cid``.
+# Various list/collection-like view classes.
     
-define ->
+define ['common/utils'], (utils) ->
 
+    # CollectionView
+    # ==============
+    # Robust view class for handling the various operations of a collection.
+    # Manages adding, removing, reseting and destroying child views relative
+    # to their ``model``.
     class CollectionView extends Backbone.View
         viewClass: Backbone.View
 
@@ -49,6 +52,54 @@ define ->
         destroy: (model) => @childViews[model.cid].el.remove()
 
 
+    # ExpandableListMixin
+    # ===================
+    # Provides an API for collapsing a list-like element. It handles rendering
+    # an ``expander`` element when collapse is called. On each ``collapse()``
+    # call, the ``expander`` is re-rendered to support dynamic changes to the
+    # list. Suggested use: the end of the render method once all items are in
+    # the list.
+    #
+    # This can be mixed in with any view class, use
+    # ``utils.include(klass, mixin)``
+    ExpandableListMixin =
+        collapsedLength: 5
+
+        getItems: -> @el.children()
+
+        getHiddenItems: ->
+             @getItems().filter ":gt(#{@collapsedLength-1})"
+
+        getExpanderText: ->
+            "Show #{@getHiddenItems().length} more.."
+
+        renderExpander: ->
+            @expander = $('<a class="expand" href="#">' + @getExpanderText() + '</a>')
+                .bind 'click', =>
+                    @expand()
+                    return false
+            @el.after @expander
+
+        expand: ->
+            @getHiddenItems().show()
+            @expander.remove()
+
+        collapse: ->
+            if @expander then @expander.remove()
+            if @getItems().length > @collapsedLength
+                @getHiddenItems().hide()
+                @renderExpander()
+
+
+    # ExpandableListView
+    # ==================
+    # View class for ``ExpandableListMixin``
+    class ExpandableListView extends Backbone.View
+
+    utils.include ExpandableListView, ExpandableListMixin
+
     return {
         View: CollectionView
+        ExpandableListMixin: ExpandableListMixin
+        ExpandableList: ExpandableListView
     }

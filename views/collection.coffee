@@ -12,6 +12,8 @@ define ['common/utils'], (utils) ->
     class CollectionView extends Backbone.View
         viewClass: Backbone.View
 
+        defaultContent: null
+
         initialize: ->
             @childViews = {}
             @collection.bind 'add', @add
@@ -19,20 +21,31 @@ define ['common/utils'], (utils) ->
             @collection.bind 'remove', @remove
             @collection.bind 'destroy', @destroy
 
+            if @defaultContent
+                @collection.bind 'all', @all
+                @defaultContent = @$(@defaultContent).detach()
+                @el.append @defaultContent
+
         insertChild: (view) ->
             @el.append view.el
+
+        all: =>
+            if @collection.length
+                @defaultContent.hide()
+            else
+                @defaultContent.show()
 
         add: (model) =>
             # the view for this model has already been rendered, simply
             # re-attach it to the DOM
-            if model.cid in @childViews
-                view = @childViews[model.cid]
-                # clear destroy timer from stack
-                clearTimeout view._removeTimer
+            if @childViews[model.id or model.cid]
+                view = @childViews[model.id or model.cid]
+                # clear destroy timer
+                clearTimeout view._destroyTimer
             # create a new view representing this model
             else
-                view = @childViews[model.cid] = (new @viewClass model: model).render()
-            @insertChild view
+                view = @childViews[model.id or model.cid] = (new @viewClass model: model).render()
+                @insertChild view
 
         # the collection has been reset, so create views for each new model
         reset: (collection, options) =>
@@ -41,17 +54,17 @@ define ['common/utils'], (utils) ->
 
         # detach the DOM element. this is intended to be temporary
         remove: (model) =>
-            view = @childViews[model.cid]
+            view = @childViews[model.id or model.cid]
             view.el.detach()
             # since this should be temporary, we set a timer to destroy the
             # element after some time to prevent memory leaks. note: this has no
             # impact on the underlying model
-            view._removeTimer = setTimeout =>
+            view._destroyTimer = setTimeout =>
                 @destroy model
             , 1000 * 10
 
         # remove the DOM element and all bound data completely
-        destroy: (model) => @childViews[model.cid].el.remove()
+        destroy: (model) => @childViews[model.id or model.cid].el.remove()
 
 
     # ExpandableListMixin

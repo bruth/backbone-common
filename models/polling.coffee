@@ -8,7 +8,7 @@
 define ['common/utils'], (utils) ->
 
     Mixin =
-        pollInterval: 1000 * 30
+        pollInterval: 1000 * 10
         initialize: -> @startPolling()
         startPolling: -> @_pollInterval = setInterval (=> @poll()), @pollInterval
         stopPolling: -> clearTimeout @_pollInterval

@@ -46,6 +46,7 @@ define ['common/utils'], (utils) ->
             else
                 view = @childViews[model.id or model.cid] = (new @viewClass model: model).render()
                 @insertChild view
+            return view
 
         # the collection has been reset, so create views for each new model
         reset: (collection, options) =>

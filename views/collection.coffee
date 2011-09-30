@@ -90,7 +90,7 @@ define ['common/utils'], (utils) ->
             "Show #{@getHiddenItems().length} more.."
 
         renderExpander: ->
-            @expander = $('<a class="expand" href="#">' + @getExpanderText() + '</a>')
+            @expander = $('<a class="expand-list" href="#">' + @getExpanderText() + '</a>')
                 .bind 'click', =>
                     @expand()
                     return false

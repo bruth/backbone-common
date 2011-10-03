@@ -20,6 +20,7 @@ define ['common/utils'], (utils) ->
             @collection.bind 'reset', @reset
             @collection.bind 'remove', @remove
             @collection.bind 'destroy', @destroy
+            @collection.bind 'change', @update
 
             if @defaultContent
                 @collection.bind 'all', @all
@@ -38,8 +39,7 @@ define ['common/utils'], (utils) ->
         add: (model) =>
             # the view for this model has already been rendered, simply
             # re-attach it to the DOM
-            if @childViews[model.id or model.cid]
-                view = @childViews[model.id or model.cid]
+            if (view = @childViews[model.id or model.cid])
                 # clear destroy timer
                 clearTimeout view._destroyTimer
             # create a new view representing this model
@@ -67,6 +67,8 @@ define ['common/utils'], (utils) ->
         # remove the DOM element and all bound data completely
         destroy: (model) => @childViews[model.id or model.cid].el.remove()
 
+        # re-renders a child view
+        update: (model) => @childViews[model.id or model.cid].render()
 
     # ExpandableListMixin
     # ===================

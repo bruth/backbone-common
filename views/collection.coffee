@@ -67,8 +67,15 @@ define ['common/utils'], (utils) ->
         # remove the DOM element and all bound data completely
         destroy: (model) => @childViews[model.id or model.cid].el.remove()
 
-        # re-renders a child view
-        update: (model) => @childViews[model.id or model.cid].render()
+        # re-renders a child view. if the model was added to the collection
+        # before a primary key was designated to it, it will be referenced by
+        # the `cid'. ensure if an `id' now exists to update the reference
+        update: (model) =>
+            view = @childViews[model.id or model.cid]
+            if not view and (view = @childViews[model.cid])
+                @childViews[model.id] = view
+                delete @childViews[model.cid]
+            view.render()
 
     # ExpandableListMixin
     # ===================

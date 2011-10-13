@@ -19,7 +19,7 @@ define ['common/utils'], (utils) ->
         poll: -> @fetch()
 
     class PollingCollection extends Backbone.Collection
-        poll: -> @update()
+        poll: -> @fetch update: true
 
     utils.include PollingModel, Mixin
     utils.include PollingCollection, Mixin

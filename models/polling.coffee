@@ -4,6 +4,8 @@
 # initialization. Override the ``pollInterval`` property to adjust the
 # time between polls. Override the ``poll`` method to customize the
 # behavior of the poll.
+#
+# Collections by default update all models in-place.
 
 define ['common/utils'], (utils) ->
 
@@ -12,10 +14,12 @@ define ['common/utils'], (utils) ->
         initialize: -> @startPolling()
         startPolling: -> @_pollInterval = setInterval (=> @poll()), @pollInterval
         stopPolling: -> clearTimeout @_pollInterval
-        poll: -> @fetch()
 
     class PollingModel extends Backbone.Model
+        poll: -> @fetch()
+
     class PollingCollection extends Backbone.Collection
+        poll: -> @update()
 
     utils.include PollingModel, Mixin
     utils.include PollingCollection, Mixin

@@ -60,8 +60,8 @@ define ->
         update: (view) ->
 
         show: (view, location=@location) ->
-            clearTimeout @_hoverTimer
-            @_hoverTimer = setTimeout =>
+            @clear()
+            @delay =>
                 # update the popover relative to the view/model
                 @update(view)
                 # update the class corresponding to the specified location
@@ -72,21 +72,27 @@ define ->
             , 300
 
         hide: (immediately=false) ->
-            clearTimeout @_hoverTimer
+            @clear()
             if immediately then @el.hide()
             else if not @entered
-                @_hoverTimer = setTimeout =>
+                @delay =>
                     @el.hide()
                 , 100
 
-        mouseenter: (view) ->
-            clearTimeout @_hoverTimer
+        mouseenter: ->
             @entered = true
+            @clear()
 
         mouseleave: ->
-            clearTimeout @_hoverTimer
             @entered = false
             @hide()
+
+        delay: (func, delay) ->
+            @_hoverTimer = setTimeout func, delay
+
+        clear: ->
+            clearTimeout @_hoverTimer
+            @el.clearQueue()
 
 
     return {

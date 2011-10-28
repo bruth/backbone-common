@@ -51,7 +51,6 @@ define ['common/utils'], (utils) ->
         # the collection has been reset, so create views for each new model
         reset: (collection, options) =>
             collection.each @add
-            if options.initial then @el.animate opacity: 100, 500
 
         # detach the DOM element. this is intended to be temporary
         remove: (model) =>

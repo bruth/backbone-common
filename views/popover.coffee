@@ -1,4 +1,4 @@
-define ->
+define ['backbone'], (Backbone) ->
 
     locations =
         right: (reference, target) ->

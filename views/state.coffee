@@ -21,7 +21,7 @@
 # Works with ``common/models/state.coffee``. See it's usage for more
 # information.
 
-define ->
+define ['backbone'], (Backbone) ->
 
     class StateView extends Backbone.View
         initialize: ->

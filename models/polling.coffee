@@ -7,7 +7,7 @@
 #
 # Collections by default update all models in-place.
 
-define ['common/utils'], (utils) ->
+define ['backbone', 'common/utils'], (Backbone, utils) ->
 
     Mixin =
         pollInterval: 1000 * 10

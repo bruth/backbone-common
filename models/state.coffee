@@ -25,7 +25,7 @@
 #   ``reactivate`` - passed into ``enable`` which will trigger the
 #   "active" event if the model was in an active state prior to being disabled.
 
-define ->
+define ['backbone'], (Backbone) ->
 
     class StateModel extends Backbone.Model
         defaults:

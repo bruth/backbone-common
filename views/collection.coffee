@@ -2,7 +2,7 @@
 # 
 # Various list/collection-like view classes.
     
-define ['common/utils'], (utils) ->
+define ['backbone', 'common/utils'], (Backbone, utils) ->
 
     # CollectionView
     # ==============

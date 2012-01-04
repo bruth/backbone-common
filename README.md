@@ -1,9 +1,7 @@
 Backbone-Common
 ===============
 Backbone-Common is a growing collection of common Backbone subclasses and
-utilities useful across projects to work with the RequireJS module format.
-Read the [CommonJS notes](http://requirejs.org/docs/commonjs.html) on the
-[RequireJS website](http://requirejs.org).
+utilities useful across projects to work with the AMD module format.
 
 If you have useful subclasses or utilities of your own, please send a pull
 request.
@@ -19,3 +17,5 @@ to customize the behavior, if appropriate.
 used together. This includes Model/Collection pairs, View/CollectionView pairs,
 etc. See https://github.com/bruth/backbone-common/blob/master/models/polling.coffee
 for an example of a model and collection that implements polling functionality.
+* Ensure modules are included in their respective top-level file. See #4 for
+details.
